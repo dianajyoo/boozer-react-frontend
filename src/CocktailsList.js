@@ -8,7 +8,7 @@ const CocktailsList = ({cocktails}) => {
   )
 
   return (
-    <div>
+    <div className='list'>
       <ul>
         {renderCocktails}
       </ul>

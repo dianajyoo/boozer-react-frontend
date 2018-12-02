@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import CocktailsContainer from './CocktailsContainer'
-// import CocktailCard from './CocktailCard'
+import Form from './Form'
 import logo from './logo.svg';
 import './App.css';
 
@@ -29,6 +29,7 @@ class App extends Component {
         <Router>
           <React.Fragment>
             <Route path='/api/v1/cocktails' render={(props) => <CocktailsContainer {...props} cocktails={this.state.cocktails} />} />
+            <Form />
           </React.Fragment>
         </Router>
       </div>
