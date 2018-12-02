@@ -1,5 +1,6 @@
 import React from 'react'
 import CocktailCard from './CocktailCard'
+import { NavLink } from 'react-router-dom'
 
 export default class CocktailsContainer extends React.Component {
 
@@ -19,13 +20,18 @@ export default class CocktailsContainer extends React.Component {
   }
 
   render() {
-    const cocktailArray = this.state.cocktails.map(cocktail => {
-      return <CocktailCard key={cocktail.id} cocktail={cocktail} />
-    })
 
     return (
       <div>
-        {cocktailArray}
+        <ul>
+          {this.state.cocktails.map(cocktail => (
+            <li className='nav-list'>
+            <NavLink
+              to={`/api/v1/cocktails/${cocktail.id}`}
+              >{cocktail.name}</NavLink>
+            </li>
+          ))}
+        </ul>
       </div>
     )
   }
