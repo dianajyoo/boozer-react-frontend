@@ -1,14 +1,13 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 
-export default class CocktailCard extends React.Component {
-  render() {
-    return (
-      <Router>
+// export default class CocktailCard extends React.Component {
+//   render() {
+    const CocktailCard = ({match, cocktails}) => {
+      return (
         <div>
-          {this.props.cocktail.name}
+          <h1>Yay Cocktail</h1>
         </div>
-      </Router>
-    )
-  }
-}
+      )
+    }
+
+export default CocktailCard
