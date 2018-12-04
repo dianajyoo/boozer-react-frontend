@@ -3,19 +3,19 @@ import React from 'react'
 const InputForm = (props) => {
   return (
     <div>
-      <form onSubmit={props.handleProportionSubmit}>
+      <form onSubmit={e => props.handleProportionSubmit(e)}>
         <input
           type='text'
-          name='proportions'
+          name='ingredient_name'
           placeholder='Ingredient Name'
           value={props.ingredient}
-          onChange={props.handleChange} />
+          onChange={e => props.handleChange(e)} />
         <input
           type='text'
           name='amount'
           placeholder='Quantity'
           value={props.amount}
-          onChange={props.handleChange} />
+          onChange={e => props.handleChange(e)} />
 
         <input type='submit' value='Submit' />
       </form>

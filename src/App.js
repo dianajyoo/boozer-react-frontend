@@ -9,15 +9,13 @@ class App extends Component {
 
   state = {
     cocktails: [],
-    cocktailDetail: [],
-    counter: 0
+    cocktailDetail: []
   }
 
   componentDidMount() {
     fetch('http://localhost:3000/api/v1/cocktails')
       .then(res => res.json())
       .then(json => {
-        console.log(json)
         this.setState({
           cocktails: json
         })
@@ -41,7 +39,6 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div>
         <Router>
@@ -53,7 +50,7 @@ class App extends Component {
               cocktailDetail={this.state.cocktailDetail}
               handleClick={this.handleClick}
               />} />
-            <Form counter={this.state.counter} />
+            <Form />
           </React.Fragment>
         </Router>
       </div>
