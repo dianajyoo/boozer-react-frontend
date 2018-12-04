@@ -17,15 +17,20 @@ class Form extends React.Component {
   handleChange = (e) => {
     // console.log(e.target.value)
 
-    if (e.target.name !== 'ingredient_name' || e.target.name !== 'amount') {
+    if (e.target.name === 'ingredient_name') {
+      console.log("Made it Here")
       this.setState({
-        [e.target.name]: e.target.value
+        ingredient_name: e.target.value,
+        proportions: [{ingredient_name: e.target.value, amount: this.state.amount}]
+      })
+    } else if (e.target.name === 'amount') {
+      this.setState({
+        amount: e.target.value,
+        proportions: [{ingredient_name: this.state.ingredient_name, amount: e.target.value}]
       })
     } else {
       this.setState({
-        ingredient_name: e.target.value,
-        amount: e.target.value,
-        proportions: [{ingredient_name: this.state.ingredient_name, amount: this.state.amount}]
+        [e.target.name]: e.target.value
       })
     }
   }
@@ -61,16 +66,21 @@ class Form extends React.Component {
     e.preventDefault()
     console.log('Made it here')
     console.log(this.state.cocktailId)
+    console.log(this.state.proportions)
 
-    fetch(`http://localhost:3000/api/v1/cocktails/341`, {
+    let newProportions = [...this.state.proportions]
+    let url = "http://localhost:3000/api/v1/cocktails" + "/" + this.state.cocktailId
+    // debugger
+
+    fetch(url, {
       method: 'PATCH',
       headers: {
-        'content-type': 'application/json',
-        'Accept': 'application/json'
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
       },
       body: JSON.stringify({
-        // proportions: [...this.state.proportions, {ingredient_name: this.state.proportions.ingredient_name, amount: this.state.proportions.amount}]
-        proportions: [...this.state.proportions]
+        proportions: this.state.proportions
+        // name: "This cocktail"
         })
       })
     }
