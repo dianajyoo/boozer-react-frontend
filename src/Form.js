@@ -14,18 +14,18 @@ class Form extends React.Component {
   }
 
   handleChange = (e) => {
-    // console.log(e.target.value)
+    console.log(e.target.value)
 
     if (e.target.name === 'ingredient_name') {
-      console.log("Made it Here")
+      console.log("HERE")
       this.setState({
         ingredient_name: e.target.value,
-        proportions: [{ingredient_name: e.target.value, amount: this.state.amount}]
+        // proportions: [{ingredient_name: e.target.value, amount: this.state.amount}]
       })
     } else if (e.target.name === 'amount') {
       this.setState({
         amount: e.target.value,
-        proportions: [{ingredient_name: this.state.ingredient_name, amount: e.target.value}]
+        // proportions: [{ingredient_name: this.state.ingredient_name, amount: e.target.value}]
       })
     } else {
       this.setState({
@@ -60,7 +60,7 @@ class Form extends React.Component {
     // e.preventDefault()
     console.log('Ingredient Submit')
 
-    let newProportions = [...this.state.proportions]
+    // let newProportions = [...this.state.proportions]
     let ingredient_url = "http://localhost:3000/api/v1/ingredients"
     // debugger
 
@@ -80,12 +80,10 @@ class Form extends React.Component {
 
     handleProportionSubmit = (newIngredient, newCocktail, object) => {
       // e.preventDefault()
-      // console.log('Made it here')
-      console.log(this.state.cocktailId)
-      console.log(this.state.proportions)
-      console.log(this.state.id)
+      console.log('Made it here')
+      console.log(this.state.ingredient_name)
+      console.log(this.state.amount)
 
-      let newProportions = [...this.state.proportions]
       let proportion_url = "http://localhost:3000/api/v1/proportions"
       // debugger
 
@@ -96,11 +94,9 @@ class Form extends React.Component {
           'Accepts': 'application/json'
         },
         body: JSON.stringify({
-          // proportions: this.state.proportions,
           cocktail_id: newCocktail.id,
           ingredient_id: newIngredient.id,
-          amount: object.amount,
-          // name: "This cocktail"
+          amount: object.amount
           })
         })
         .then(res => res.json())

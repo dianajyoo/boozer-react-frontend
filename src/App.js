@@ -9,8 +9,7 @@ class App extends Component {
 
   state = {
     cocktails: [],
-    cocktailDetail: [],
-    ingredient_id: 0
+    cocktailDetail: []
   }
 
   componentDidMount() {
@@ -41,12 +40,6 @@ class App extends Component {
       })
   }
 
-  // handleIngredient = (json) => {
-  //   this.setState({
-  //     ingredient_id: json.proportions[0].id
-  //   })
-  // }
-
   render() {
     return (
       <div>
@@ -59,7 +52,7 @@ class App extends Component {
               cocktailDetail={this.state.cocktailDetail}
               handleClick={this.handleClick}
               />} />
-            <Form ingredient_id={this.state.cocktailDetail} />
+            <Form />
           </React.Fragment>
         </Router>
       </div>
