@@ -9,13 +9,15 @@ class App extends Component {
 
   state = {
     cocktails: [],
-    cocktailDetail: []
+    cocktailDetail: [],
+    ingredient_id: 0
   }
 
   componentDidMount() {
     fetch('http://localhost:3000/api/v1/cocktails')
       .then(res => res.json())
       .then(json => {
+        // console.log(json)
         this.setState({
           cocktails: json
         })
@@ -26,17 +28,24 @@ class App extends Component {
     e.preventDefault()
 
     console.log('Clicked')
+    // console.log('this.state.length', this.state.length)
 
     fetch(`http://localhost:3000/api/v1/cocktails/${object.id}`)
       .then(res => res.json())
       .then(json => {
-        // console.log(json.proportions)
+        console.log(json.proportions[0].id)
 
         this.setState({
           cocktailDetail: json.proportions
         })
       })
   }
+
+  // handleIngredient = (json) => {
+  //   this.setState({
+  //     ingredient_id: json.proportions[0].id
+  //   })
+  // }
 
   render() {
     return (
@@ -50,7 +59,7 @@ class App extends Component {
               cocktailDetail={this.state.cocktailDetail}
               handleClick={this.handleClick}
               />} />
-            <Form />
+            <Form ingredient_id={this.state.cocktailDetail} />
           </React.Fragment>
         </Router>
       </div>

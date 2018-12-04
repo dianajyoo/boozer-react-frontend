@@ -4,7 +4,6 @@ import InputForm from './InputForm'
 class Form extends React.Component {
 
   state = {
-    cocktailId: '',
     counter: [],
     name: '',
     description: '',
@@ -36,7 +35,7 @@ class Form extends React.Component {
   }
 
 
-  handleSubmit = (e) => {
+  handleSubmit = (e, object) => {
     e.preventDefault()
     // debugger
     console.log('Clicked')
@@ -47,43 +46,66 @@ class Form extends React.Component {
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        name: this.state.name,
-        description: this.state.description,
-        instructions: this.state.instructions
+        name: object.name,
+        description: object.description,
+        instructions: object.instructions
       })
     })
       .then(res => res.json())
-      .then(json => {
-        console.log(json)
-        this.setState({
-          cocktailId: json.id
-        })
-      })
+      .then(json => this.handleIngredientSubmit(json, object))
 
   }
 
-  handleProportionSubmit = (e) => {
-    e.preventDefault()
-    console.log('Made it here')
-    console.log(this.state.cocktailId)
-    console.log(this.state.proportions)
+  handleIngredientSubmit = (newCocktail, object) => {
+    // e.preventDefault()
+    console.log('Ingredient Submit')
 
     let newProportions = [...this.state.proportions]
-    let url = "http://localhost:3000/api/v1/cocktails" + "/" + this.state.cocktailId
+    let ingredient_url = "http://localhost:3000/api/v1/ingredients"
     // debugger
 
-    fetch(url, {
-      method: 'PATCH',
+    fetch(ingredient_url, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accepts': 'application/json'
       },
       body: JSON.stringify({
-        proportions: this.state.proportions
-        // name: "This cocktail"
+        name: object.ingredient_name
         })
       })
+      .then(res => res.json())
+      .then(json => this.handleProportionSubmit(json, newCocktail, object))
     }
+
+    handleProportionSubmit = (newIngredient, newCocktail, object) => {
+      // e.preventDefault()
+      // console.log('Made it here')
+      console.log(this.state.cocktailId)
+      console.log(this.state.proportions)
+      console.log(this.state.id)
+
+      let newProportions = [...this.state.proportions]
+      let proportion_url = "http://localhost:3000/api/v1/proportions"
+      // debugger
+
+      fetch(proportion_url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accepts': 'application/json'
+        },
+        body: JSON.stringify({
+          // proportions: this.state.proportions,
+          cocktail_id: newCocktail.id,
+          ingredient_id: newIngredient.id,
+          amount: object.amount,
+          // name: "This cocktail"
+          })
+        })
+        .then(res => res.json())
+        .then(console.log)
+      }
 
   handleAddButton = () => {
     this.setState({
@@ -96,7 +118,7 @@ class Form extends React.Component {
     return (
       <div className='form'>
         <h2>Create a Cocktail</h2>
-        <form onSubmit={e => this.handleSubmit(e)}>
+        <form onSubmit={e => this.handleSubmit(e, this.state)}>
           <input
             type='text'
             name='name'
