@@ -31,14 +31,23 @@
   }
 }
 
-/* .form {
-  float: right;
-} */
+#main-wrapper {
+  margin-top: 3em;
+}
 
 .list {
   float: left;
+  width: 25em;
 }
 
 .card {
-  width: 60em;
+  width: 65em;
+}
+
+.form {
+  width: 35em;
+}
+
+#add-btn {
+  margin-top: 1em;
 }

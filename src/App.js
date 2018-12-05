@@ -4,6 +4,7 @@ import CocktailsContainer from './CocktailsContainer'
 import Form from './Form'
 import logo from './logo.svg';
 import './App.css';
+import '../node_modules/semantic-ui/dist/semantic.min.css';
 
 class App extends Component {
 
@@ -27,12 +28,11 @@ class App extends Component {
     e.preventDefault()
 
     console.log('Clicked')
-    // console.log('this.state.length', this.state.length)
 
     fetch(`http://localhost:3000/api/v1/cocktails/${object.id}`)
       .then(res => res.json())
       .then(json => {
-        console.log(json.proportions[0].id)
+        // console.log(json.proportions[0].id)
 
         this.setState({
           cocktailDetail: json.proportions
@@ -42,7 +42,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className='ui grid' id='main-wrapper'>
         <Router>
           <React.Fragment>
             <Route

@@ -14,31 +14,28 @@ class Form extends React.Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.value)
+    console.log(e.target)
 
     if (e.target.name === 'ingredient_name') {
-      console.log("HERE")
       this.setState({
-        ingredient_name: e.target.value,
-        // proportions: [{ingredient_name: e.target.value, amount: this.state.amount}]
+        ingredient_name: e.target.value
       })
     } else if (e.target.name === 'amount') {
       this.setState({
-        amount: e.target.value,
-        // proportions: [{ingredient_name: this.state.ingredient_name, amount: e.target.value}]
+        amount: e.target.value
       })
     } else {
       this.setState({
         [e.target.name]: e.target.value
       })
     }
-  }
 
+  }
 
   handleSubmit = (e, object) => {
     e.preventDefault()
     // debugger
-    console.log('Clicked')
+    console.log(object)
 
     fetch('http://localhost:3000/api/v1/cocktails', {
       method: 'POST',
@@ -57,12 +54,10 @@ class Form extends React.Component {
   }
 
   handleIngredientSubmit = (newCocktail, object) => {
-    // e.preventDefault()
-    console.log('Ingredient Submit')
 
-    // let newProportions = [...this.state.proportions]
     let ingredient_url = "http://localhost:3000/api/v1/ingredients"
-    // debugger
+
+    console.log(object)
 
     fetch(ingredient_url, {
       method: 'POST',
@@ -79,13 +74,12 @@ class Form extends React.Component {
     }
 
     handleProportionSubmit = (newIngredient, newCocktail, object) => {
-      // e.preventDefault()
+
       console.log('Made it here')
-      console.log(this.state.ingredient_name)
-      console.log(this.state.amount)
+
+      // console.log(object)
 
       let proportion_url = "http://localhost:3000/api/v1/proportions"
-      // debugger
 
       fetch(proportion_url, {
         method: 'POST',
@@ -100,52 +94,64 @@ class Form extends React.Component {
           })
         })
         .then(res => res.json())
-        .then(console.log)
+        .then( () => {
+          alert('Successfully created cocktail!')
+        })
+
       }
 
   handleAddButton = () => {
     this.setState({
-      counter: [...this.state.counter, {name: ''}]
+      counter: [...this.state.counter, {name: ''}],
+      proportions: [...this.state.proportions, {ingredient_name: this.state.ingredient_name, amount: this.state.amount}]
     })
   }
 
   render() {
-
+    console.log(this.state.interval)
     return (
       <div className='form'>
         <h2>Create a Cocktail</h2>
-        <form onSubmit={e => this.handleSubmit(e, this.state)}>
-          <input
-            type='text'
-            name='name'
-            placeholder='Name'
-            value={this.state.name}
-            onChange={e => this.handleChange(e)} /><br />
-          <input
-            type='text'
-            name='description'
-            placeholder='Description'
-            value={this.state.description}
-            onChange={e => this.handleChange(e)} /><br />
-          <input
-            type='text'
-            name='instructions'
-            placeholder='Instructions'
-            value={this.state.instructions}
-            onChange={e => this.handleChange(e)} /><br />
+        <form className='ui form' onSubmit={e => this.handleSubmit(e, this.state)}>
+          <div className='field'>
+            <input
+              type='text'
+              name='name'
+              placeholder='Name'
+              value={this.state.name}
+              onChange={e => this.handleChange(e)} /><br />
+            </div>
+          <div className='field'>
+            <input
+              type='text'
+              name='description'
+              placeholder='Description'
+              value={this.state.description}
+              onChange={e => this.handleChange(e)} /><br />
+            </div>
+          <div className='field'>
+            <input
+              type='text'
+              name='instructions'
+              placeholder='Instructions'
+              value={this.state.instructions}
+              onChange={e => this.handleChange(e)} /><br />
+          </div>
 
-          <input type='submit' value='Create Cocktail' />
+          <input className='ui button' type='submit' value='Create Cocktail' />
         </form>
 
         <h2>Proportions</h2>
         <InputForm handleProportionSubmit={this.handleProportionSubmit} ingredient={this.state.ingredient_name} amount={this.state.amount} handleChange={this.handleChange} handleAddButton={this.handleAddButton} />
 
-        {this.state.counter.map(proportion => <InputForm handleProportionSubmit={this.handleProportionSubmit} ingredient={this.state.ingredient_name} amount={this.state.amount} handleChange={this.handleChange} handleAddButton={this.handleAddButton} />)}
-        <button onClick={this.handleAddButton}>Add</button>
+        {this.state.counter.map(proportion => <InputForm handleProportionSubmit={e => this.handleProportionSubmit(e)} ingredient={this.state.ingredient_name} amount={this.state.amount} handleChange={this.handleChange} handleAddButton={this.handleAddButton} />)}
+
+        <button id='add-btn' className='ui button' onClick={this.handleAddButton}>Add</button>
 
       </div>
     )
   }
+
 }
 
 export default Form
