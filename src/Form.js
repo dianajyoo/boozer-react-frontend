@@ -94,10 +94,8 @@ class Form extends React.Component {
           })
         })
         .then(res => res.json())
-        .then( () => {
-          alert('Successfully created cocktail!')
-        })
-
+        .then(json => this.props.addNewCocktail(json, newIngredient, newCocktail, object))
+        // to pass a cb fn from parent to trigger rerender/ setState
       }
 
   handleAddButton = () => {

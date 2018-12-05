@@ -40,6 +40,12 @@ class App extends Component {
       })
   }
 
+  addNewCocktail = (proportion, newIngredient, newCocktail, object) => {
+    this.setState({
+      cocktails: [...this.state.cocktails, newCocktail]
+    })
+  }
+
   render() {
     return (
       <div className='ui grid' id='main-wrapper'>
@@ -52,7 +58,7 @@ class App extends Component {
               cocktailDetail={this.state.cocktailDetail}
               handleClick={this.handleClick}
               />} />
-            <Form />
+            <Form addNewCocktail={this.addNewCocktail} />
           </React.Fragment>
         </Router>
       </div>
